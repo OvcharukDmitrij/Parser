@@ -16,9 +16,10 @@ class PepSpider(scrapy.Spider):
         )
         all_peps = table_numerical_index.css(
             'a.pep.reference.internal::attr(href)'
-        )
+        ).getall()
         # Парсинг страницы каждого pep из общей таблицы
         for pep_link in all_peps:
+            pep_link += '/'
             yield response.follow(pep_link, callback=self.parse_pep)
 
     def parse_pep(self, response):
